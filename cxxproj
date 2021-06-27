@@ -1,0 +1,8 @@
+-SOURCE
+src/*.c
+
+-LIBS
+SDL2_image
+
+-COMMANDS
+sdl2-config --libs --cflags
