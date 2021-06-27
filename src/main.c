@@ -14,9 +14,9 @@ SDL_Texture *snake_head;
 void init() {
     // Window and renderer
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-        printf("Error initializing SDL: %s\n", SDL_GetError());
+        fprintf(stderr, "Error initializing SDL: %s\n", SDL_GetError());
     win = SDL_CreateWindow(
-        "SDL Game",
+        "jaq/the/cat/c-snake-sdl",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         SIDE, SIDE,
