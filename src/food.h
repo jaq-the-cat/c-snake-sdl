@@ -9,4 +9,6 @@
 typedef vec2 food;
 
 void food_init();
+void food_move(food* f);
 void food_render(SDL_Renderer *rend, SDL_Texture *t_food);
+void map_food(void (*map)(food*));

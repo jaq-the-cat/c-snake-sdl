@@ -12,6 +12,16 @@ void food_init() {
     }
 }
 
+void food_move(food* f) {
+    f->x = (double) (rand() % (int) CELLS);
+    f->y = (double) (rand() % (int) CELLS);
+}
+
+void map_food(void (*map)(food*)) {
+    for (int i=0; i<FOODCOUNT; i++)
+        map(&foods[i]);
+}
+
 void food_render(SDL_Renderer *rend, SDL_Texture *t_food) {
     for (int i=0; i<FOODCOUNT; i++) {
         SDL_RenderCopy(

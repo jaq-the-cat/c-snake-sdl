@@ -77,9 +77,17 @@ int handleev() {
 
 }
 
+void for_each_food(food* f) {
+    if (f->x == snek.head->position.x
+    && f->y == snek.head->position.y) {
+        food_move(f);
+    }
+}
+
 void update() {
     mov = dir;
     s_move(&snek, mov, 0);
+    map_food(for_each_food);
 }
 
 void render() {
