@@ -95,6 +95,8 @@ int main() {
         update();
         render();
 
+        SDL_Delay(220);
+
         SDL_RenderPresent(rend);
     }
 
