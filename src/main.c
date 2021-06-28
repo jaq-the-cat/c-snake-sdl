@@ -31,20 +31,35 @@ void init() {
     food_init();
 }
 
+vec2 mov = {1, 0};
+
 int handleev() {
     SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.key.keysym.scancode) {
+        case SDL_SCANCODE_ESCAPE:
         case SDL_SCANCODE_Q:
             return 1;
         if (event.key.type == SDL_KEYDOWN) {
             case SDL_SCANCODE_W:
+            case SDL_SCANCODE_UP:
+                if (mov.y == 0) // moving horizontally
+                    mov = (vec2) {0, -1};
                 break;
             case SDL_SCANCODE_A:
+            case SDL_SCANCODE_LEFT:
+                if (mov.x == 0) // moving vertically
+                    mov = (vec2) {1, 0};
                 break;
             case SDL_SCANCODE_S:
+            case SDL_SCANCODE_DOWN:
+                if (mov.y == 0) // moving horizontally
+                    mov = (vec2) {0, 1};
                 break;
             case SDL_SCANCODE_D:
+            case SDL_SCANCODE_RIGHT:
+                if (mov.x == 0) // moving vertically
+                    mov = (vec2) {-1, 0};
                 break;
         }
         default:
