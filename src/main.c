@@ -13,6 +13,10 @@ SDL_Texture *t_snake_body;
 SDL_Texture *t_snake_head;
 
 snake snek;
+const int MOV_DELAY = 10;
+
+vec2 dir = {1, 0}; // wanted movement
+vec2 mov = {1, 0}; // actual movement
 
 void init() {
     // Window and renderer
@@ -37,8 +41,6 @@ void init() {
     snek = s_init((vec2) {6, 6});
 }
 
-vec2 mov = {1, 0};
-
 int handleev() {
     SDL_Event event;
     SDL_PollEvent(&event);
@@ -50,22 +52,22 @@ int handleev() {
             case SDL_SCANCODE_W:
             case SDL_SCANCODE_UP:
                 if (mov.y == 0) // moving horizontally
-                    mov = (vec2) {0, -1};
+                    dir = (vec2) {0, -1};
                 break;
             case SDL_SCANCODE_A:
             case SDL_SCANCODE_LEFT:
                 if (mov.x == 0) // moving vertically
-                    mov = (vec2) {-1, 0};
+                    dir = (vec2) {-1, 0};
                 break;
             case SDL_SCANCODE_S:
             case SDL_SCANCODE_DOWN:
                 if (mov.y == 0) // moving horizontally
-                    mov = (vec2) {0, 1};
+                    dir = (vec2) {0, 1};
                 break;
             case SDL_SCANCODE_D:
             case SDL_SCANCODE_RIGHT:
                 if (mov.x == 0) // moving vertically
-                    mov = (vec2) {1, 0};
+                    dir = (vec2) {1, 0};
                 break;
         }
         default:
@@ -76,6 +78,7 @@ int handleev() {
 }
 
 void update() {
+    mov = dir;
     s_move(&snek, mov, 0);
 }
 
@@ -86,17 +89,18 @@ void render() {
 
 int main() {
     init();
+    int tick = 0;
     int close = 0;
     while (!close) {
         close = handleev();
         SDL_SetRenderDrawColor(rend, BACKGROUND, BACKGROUND, BACKGROUND, 255);
         SDL_RenderClear(rend);
-
-        update();
+        if (tick >= MOV_DELAY) {
+            tick = 0;
+            update();
+        } else
+            tick++;
         render();
-
-        SDL_Delay(220);
-
         SDL_RenderPresent(rend);
     }
 
