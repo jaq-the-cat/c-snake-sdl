@@ -13,11 +13,10 @@ snake s_init(vec2 pos) {
         NULL,
     };
     s.head = make_node(pos);
-    printf("Snake head: {%f, %f}\n", s.head->position.x, s.head->position.y);
     s_node *n = s.head;
-    for (int i=1; i<INITIALLEN-1; i++) {
+    for (int i=0; i<INITIALLEN; i++) {
         n->next = make_node((vec2) {pos.x-i, pos.y});
-        printf("Snake node: {%f, %f}\n", n->next->position.x, n->next->position.y);
+        n = n->next;
     }
 
     return s;
@@ -29,9 +28,11 @@ void s_move(snake *s, vec2 mov, int add) {
     s->head->position.y += mov.y;
 
     s_node *n;
-    for (n = s->head; n->next != NULL; n = n->next) {
-        n->next->position = prev;
-        prev = n->position;
+    for (n = s->head->next; n != NULL; n = n->next) {
+        printf("Current position: {%f, %f}\n", n->position.x, n->position.y);
+        vec2 last = n->position;
+        n->position = prev;
+        prev = last;
     }
     if (add) {
         n->next = malloc(sizeof(s_node));
@@ -42,9 +43,7 @@ void s_move(snake *s, vec2 mov, int add) {
 }
 
 void s_render(SDL_Renderer *rend, SDL_Texture *t_snake, snake *s) {
-    printf("RENDER: \n");
     for (s_node *n = s->head; n != NULL; n = n->next) {
-        printf("Rendering {%f, %f}\n", n->position.x, n->position.y);
         SDL_RenderCopy(
             rend, t_snake, NULL,
             &(SDL_Rect) {n->position.x * CELLSIZE, n->position.y * CELLSIZE, CELLSIZE, CELLSIZE});

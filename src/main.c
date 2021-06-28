@@ -34,7 +34,7 @@ void init() {
 
     // Things
     food_init();
-    snek = s_init((vec2) {3, 3});
+    snek = s_init((vec2) {6, 6});
 }
 
 vec2 mov = {1, 0};
@@ -55,7 +55,7 @@ int handleev() {
             case SDL_SCANCODE_A:
             case SDL_SCANCODE_LEFT:
                 if (mov.x == 0) // moving vertically
-                    mov = (vec2) {1, 0};
+                    mov = (vec2) {-1, 0};
                 break;
             case SDL_SCANCODE_S:
             case SDL_SCANCODE_DOWN:
@@ -65,7 +65,7 @@ int handleev() {
             case SDL_SCANCODE_D:
             case SDL_SCANCODE_RIGHT:
                 if (mov.x == 0) // moving vertically
-                    mov = (vec2) {-1, 0};
+                    mov = (vec2) {1, 0};
                 break;
         }
         default:
