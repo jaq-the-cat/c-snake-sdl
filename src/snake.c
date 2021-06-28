@@ -28,15 +28,14 @@ void s_move(snake *s, vec2 mov, int add) {
     s->head->position.y += mov.y;
 
     s_node *n;
-    for (n = s->head->next; n != NULL; n = n->next) {
-        printf("Current position: {%f, %f}\n", n->position.x, n->position.y);
-        vec2 last = n->position;
-        n->position = prev;
+    for (n = s->head; n->next != NULL; n = n->next) {
+        vec2 last = n->next->position;
+        n->next->position = prev;
         prev = last;
     }
     if (add) {
         n->next = malloc(sizeof(s_node));
-        n->next->position = n->position;
+        n->next->position = prev;
         n->next->next = NULL;
         s->tail = n->next;
     }

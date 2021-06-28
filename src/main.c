@@ -13,6 +13,7 @@ SDL_Texture *t_snake_body;
 SDL_Texture *t_snake_head;
 
 snake snek;
+int enbiggen = 0;
 const int MOV_DELAY = 10;
 
 vec2 dir = {1, 0}; // wanted movement
@@ -81,12 +82,14 @@ void for_each_food(food* f) {
     if (f->x == snek.head->position.x
     && f->y == snek.head->position.y) {
         food_move(f);
+        enbiggen = 1;
     }
 }
 
 void update() {
     mov = dir;
-    s_move(&snek, mov, 0);
+    s_move(&snek, mov, enbiggen);
+    enbiggen = 0;
     map_food(for_each_food);
 }
 
@@ -98,14 +101,14 @@ void render() {
 int main() {
     init();
     int tick = 0;
-    int close = 0;
-    while (!close) {
-        close = handleev();
+    while (1) {
+        if (handleev()) break;
         SDL_SetRenderDrawColor(rend, BACKGROUND, BACKGROUND, BACKGROUND, 255);
         SDL_RenderClear(rend);
         if (tick >= MOV_DELAY) {
             tick = 0;
             update();
+            if (s_is_dead(&snek)) break;
         } else
             tick++;
         render();
